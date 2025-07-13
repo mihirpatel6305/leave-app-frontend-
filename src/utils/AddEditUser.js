@@ -44,7 +44,7 @@ const AddEditUser = ({
     } else {
       setOptions({ ...options, managers: [loginUser] });
     }
-  }, [getManagerOptions]);
+  }, [getManagerOptions,allManager,options,loginUser]);
 
   const formik = useFormik({
     enableReinitialize: true,
