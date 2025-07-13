@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import apiServices from "./apiServices";
 import { toast } from "react-toastify";
 import Select from "react-select";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import apiRoutes from "./apiRoutes";
 
 Modal.setAppElement("#root");
@@ -25,26 +25,48 @@ const AddEditUser = ({
   const [options, setOptions] = useState({ managers: [] });
   const loginUser = JSON.parse(localStorage.getItem("userdata"));
 
-  const getManagerOptions = async () => {
-    try {
-      const res = await apiServices.get(apiRoutes.user.getManager);
-      if (res.status === "success") {
-        setOptions({ ...options, managers: res.data });
-      } else {
-        toast.error(res.message || "Something went wrong");
-      }
-    } catch (error) {
-      console.error("Error fetching managers:", error);
-    }
-  };
+  // const getManagerOptions = async () => {
+  //   try {
+  //     const res = await apiServices.get(apiRoutes.user.getManager);
+  //     if (res.status === "success") {
+  //       setOptions({ ...options, managers: res.data });
+  //     } else {
+  //       toast.error(res.message || "Something went wrong");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching managers:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (loginUser.role === "admin" && allManager) {
-      getManagerOptions();
-    } else {
-      setOptions({ ...options, managers: [loginUser] });
-    }
-  }, [getManagerOptions,allManager,options,loginUser]);
+  // useEffect(() => {
+  //   if (loginUser.role === "admin" && allManager) {
+  //     getManagerOptions();
+  //   } else {
+  //     setOptions({ ...options, managers: [loginUser] });
+  //   }
+  // }, []);
+
+   const getManagerOptions = useCallback(async () => {
+     try {
+       const res = await apiServices.get(apiRoutes.user.getManager);
+       if (res.status === "success") {
+         setOptions((prev) => ({ ...prev, managers: res.data }));
+       } else {
+         toast.error(res.message || "Something went wrong");
+       }
+     } catch (error) {
+       console.error("Error fetching managers:", error);
+     }
+   }, []);
+
+   useEffect(() => {
+     if (loginUser.role === "admin" && allManager) {
+       getManagerOptions();
+     } else {
+       setOptions((prev) => ({ ...prev, managers: [loginUser] }));
+     }
+   }, [getManagerOptions, loginUser, allManager]);
+  
 
   const formik = useFormik({
     enableReinitialize: true,

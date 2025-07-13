@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import apiServices from "../utils/apiServices";
 import dayjs from "dayjs";
 import apiRoutes from "../utils/apiRoutes";
@@ -14,20 +14,37 @@ const actionStyles = {
 const HistoryDrawer = ({ isOpen, onClose, leave }) => {
   const [historyData, setHistoryData] = useState([]);
 
-  const getHistoryData = async () => {
-    if (!leave?._id) return;
+  // const getHistoryData = async () => {
+  //   if (!leave?._id) return;
 
-    try {
-      const res = await apiServices.get(apiRoutes.leave.history(leave?._id));
-      setHistoryData(res.data);
-    } catch (err) {
-      console.error("Failed to load History data", err);
-    }
-  };
+  //   try {
+  //     const res = await apiServices.get(apiRoutes.leave.history(leave?._id));
+  //     setHistoryData(res.data);
+  //   } catch (err) {
+  //     console.error("Failed to load History data", err);
+  //   }
+  // };
 
-  useEffect(() => {
-    getHistoryData();
-  }, [leave?._id, getHistoryData]);
+  // useEffect(() => {
+  //   getHistoryData();
+  // }, [leave?._id, getHistoryData]);
+
+
+
+   const getHistoryData = useCallback(async () => {
+     if (!leave?._id) return;
+
+     try {
+       const res = await apiServices.get(apiRoutes.leave.history(leave._id));
+       setHistoryData(res.data);
+     } catch (err) {
+       console.error("Failed to load History data", err);
+     }
+   }, [leave?._id]); // ✅ Track only what's used inside
+
+   useEffect(() => {
+     getHistoryData();
+   }, [getHistoryData]); 
   
 
   const formatValue = (v) => {
