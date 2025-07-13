@@ -36,6 +36,7 @@ const AllLeaveRequest = () => {
             <a
               href={`http://localhost:8000/attachment/${row.attachment}`}
               target="_blank"
+              rel="noreferrer"
             >
               view attachment
             </a>

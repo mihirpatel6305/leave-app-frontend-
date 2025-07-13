@@ -27,7 +27,8 @@ const HistoryDrawer = ({ isOpen, onClose, leave }) => {
 
   useEffect(() => {
     getHistoryData();
-  }, [leave]);
+  }, [leave?._id]);
+  
 
   const formatValue = (v) => {
     if (!v) return "-";
