@@ -18,7 +18,7 @@ const AddEditLeaveModal = ({
     enableReinitialize: true,
     initialValues: {
       dates: defaultValues?.leaveDates || [],
-      attachment: "",
+      attachmentUrl: "",
       reason: defaultValues?.reason || "",
     },
     validationSchema: Yup.object({
@@ -32,8 +32,8 @@ const AddEditLeaveModal = ({
         const formData = new FormData();
         values.dates.forEach((date) => formData.append("dates[]", date));
         formData.append("reason", values.reason);
-        if (values.attachment) {
-          formData.append("attachment", values.attachment);
+        if (values.attachmentUrl) {
+          formData.append("attachmentUrl", values.attachmentUrl);
         }
 
         let res;
@@ -148,12 +148,23 @@ const AddEditLeaveModal = ({
             <label className="block mb-1 font-semibold">Attachment</label>
             <input
               type="file"
-              name="attachment"
+              name="attachmentUrl"
               onChange={(e) => {
-                formik.setFieldValue("attachment", e.currentTarget.files[0]);
+                formik.setFieldValue("attachmentUrl", e.currentTarget.files[0]);
               }}
               className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
             />
+            {defaultValues?.attachmentUrl ? (
+              <a
+                href={defaultValues?.attachmentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                old Attachment
+              </a>
+            ) : (
+              <span>No Attachment</span>
+            )}
           </div>
 
           <div>

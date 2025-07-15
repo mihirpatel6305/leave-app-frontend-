@@ -34,9 +34,9 @@ const MyLeave = () => {
     {
       label: "Attachment",
       render: (row) =>
-        row.attachment ? (
+        row.attachmentUrl ? (
           <a
-            href={`${process.env.REACT_APP_IMG_URL}attachment/${row.attachment}`}
+            href={row?.attachmentUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
