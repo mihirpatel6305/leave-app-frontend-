@@ -13,6 +13,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Login URL:", apiRoutes?.auth?.login);
+    console.log("Form Data:", formData);
+
     fetch(apiRoutes?.auth?.login, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
