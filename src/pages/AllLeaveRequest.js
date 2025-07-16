@@ -30,21 +30,18 @@ const AllLeaveRequest = () => {
     { label: "User", render: (row) => row.user?.name },
     {
       label: "Attachment",
-      render: (row) => (
-        <>
-          {row.attachment ? (
-            <a
-              href={`http://localhost:8000/attachment/${row.attachment}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              view attachment
-            </a>
-          ) : (
-            "No attachment"
-          )}
-        </>
-      ),
+      render: (row) =>
+        row.attachmentUrl ? (
+          <a
+            href={row?.attachmentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Attachment
+          </a>
+        ) : (
+          <span>No Attachment</span>
+        ),
     },
     {
       label: "Action",

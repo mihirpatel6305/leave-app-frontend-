@@ -2,8 +2,9 @@ import Modal from "react-modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import apiServices from "./apiServices";
-import DatePicker from "react-multi-date-picker";
 import { toast } from "react-toastify";
+import CustomRangeDatePicker from "./CustomRangeDatePicker";
+import formatDate from "./formatDate";
 
 Modal.setAppElement("#root");
 
@@ -96,23 +97,7 @@ const AddEditLeaveModal = ({
           className="flex flex-col space-y-4"
         >
           <div>
-            <label className="block mb-1 font-semibold">Select Dates</label>
-            <DatePicker
-              multiple
-              value={formik.values.dates}
-              onChange={(dates) =>
-                formik.setFieldValue(
-                  "dates",
-                  dates.map((d) => d.format("YYYY-MM-DD"))
-                )
-              }
-              onBlur={() => formik.setFieldTouched("dates", true)}
-              format="YYYY-MM-DD"
-              inputClass="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-              containerClassName="w-full"
-              className="w-full"
-            />
-
+            <CustomRangeDatePicker formik={formik} />
             {formik.values.dates.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {formik.values.dates.map((date, idx) => (
@@ -120,7 +105,7 @@ const AddEditLeaveModal = ({
                     key={idx}
                     className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center"
                   >
-                    {date}
+                    {formatDate(date)}
                     <button
                       type="button"
                       onClick={() => {
@@ -154,16 +139,16 @@ const AddEditLeaveModal = ({
               }}
               className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
             />
-            {defaultValues?.attachmentUrl ? (
+            {defaultValues?.attachmentUrl && (
               <a
                 href={defaultValues?.attachmentUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-blue-600 hover:underline text-lg"
+                title="View Attachment"
               >
-                old Attachment
+                👁️ Old Attachment
               </a>
-            ) : (
-              <span>No Attachment</span>
             )}
           </div>
 

@@ -38,9 +38,9 @@ const TeamLeaveRequest = () => {
     {
       label: "Attachment",
       render: (row) =>
-        row.attachment ? (
+        row.attachmentUrl ? (
           <a
-            href={`http://localhost:8000/attachment/${row.attachment}`}
+            href={row?.attachmentUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
