@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/apiServices";
+import Loader from "./loader";
 
 const DataTable = ({ columns, endpoint, refreshTrigger }) => {
   const [data, setData] = useState([]);
@@ -33,7 +34,9 @@ const DataTable = ({ columns, endpoint, refreshTrigger }) => {
 
   if (loading)
     return (
-      <div className="text-center text-lg text-blue-600 py-6">Loading...</div>
+      <div className="text-center text-lg text-blue-600 py-6">
+        <Loader />
+      </div>
     );
 
   if (!data?.length)

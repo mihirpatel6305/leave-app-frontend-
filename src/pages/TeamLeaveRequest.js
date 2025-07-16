@@ -58,7 +58,7 @@ const TeamLeaveRequest = () => {
             className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-semibold shadow-inner hover:shadow-md hover:bg-green-200 transition-all duration-200"
             onClick={() => {
               setSelectedLeave(row);
-              if (row?.status === "apporved") {
+              if (row?.status === "approved") {
                 toast.error("Leave is already apporved");
               } else {
                 setOpenApporve(true);
